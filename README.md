@@ -17,6 +17,15 @@ As an **open-source project**, Titania-Q aims to democratize database management
 
 ## ✨ Features
 
+### 🆕 What's New in v0.2.0
+
+- **🚀 Standalone Application** - No external dependencies required
+- **🤖 Rust AI Implementation** - Faster and more reliable AI processing
+- **🔧 Anthropic Claude Support** - Full integration with Claude models
+- **📝 Query Logging** - Track all AI-generated and manual queries
+- **⚡ Enhanced Performance** - Direct HTTP calls without Next.js overhead
+- **📦 Smaller Bundle** - Reduced size by removing unused dependencies
+
 ### 🎯 AI-Powered SQL Generation
 
 <div align="center">
@@ -25,7 +34,7 @@ As an **open-source project**, Titania-Q aims to democratize database management
 </div>
 
 - Generate complex SQL queries using natural language
-- Support for multiple AI providers (OpenAI, Google Gemini, Ollama)
+- Support for multiple AI providers (OpenAI, Google Gemini, Anthropic Claude, Ollama)
 - Context-aware query generation based on your database schema
 - Query validation and optimization suggestions
 
@@ -38,15 +47,14 @@ As an **open-source project**, Titania-Q aims to democratize database management
 
 - Connect to MySQL, PostgreSQL, SQLite, and MongoDB
 - Real-time database schema analysis
-- Interactive table browsing with pagination and virtual scrolling
+- Interactive table browsing with pagination
 - Advanced data filtering and searching capabilities
-- Export query results to various formats
+- Query logging and history tracking
 
 ### 🔍 Visual Database Diagrams
 
-- Interactive relationship diagrams with zoom/pan functionality
 - AI-generated database relationship visualization
-- Export diagrams as images or PDF
+- Interactive Mermaid diagrams
 - Real-time schema updates
 
 ### 💬 AI Consultation
@@ -76,17 +84,17 @@ As an **open-source project**, Titania-Q aims to democratize database management
 
 ### ⚡ Advanced Features
 
-- Query logging and history
-- Custom query editor with syntax highlighting
+- Query logging and history tracking
 - Database insights and analytics
-- Export/import functionality
+- AI-powered query generation
+- Standalone application (no external dependencies)
 
 ## 🛠️ Tech Stack
 
 - **Frontend**: Next.js 14, React 18, TypeScript, Tailwind CSS
 - **Desktop**: Tauri 1.8 (Rust-based)
 - **Backend**: Rust with SQLx, MongoDB Rust Driver
-- **AI Integration**: AI SDK with multiple providers
+- **AI Integration**: Rust-based AI service with multiple providers
 - **Database Support**: MySQL, PostgreSQL, SQLite, MongoDB
 - **UI Components**: Custom components with Lucide React icons
 
@@ -104,8 +112,8 @@ As an **open-source project**, Titania-Q aims to democratize database management
 1. **Download the latest release**
 
    - Go to [Releases](https://github.com/brillianodhiya/titania-q/releases)
-   - Download `Titania-Q_0.1.0_x64_en-US.msi` (Windows Installer)
-   - Or download `Titania-Q_0.1.0_x64-setup.exe` (Portable Setup)
+   - Download `Titania-Q_0.2.0_x64_en-US.msi` (Windows Installer)
+   - Or download `Titania-Q_0.2.0_x64-setup.exe` (Portable Setup)
 
 2. **Install and run**
    - Run the installer
@@ -154,8 +162,9 @@ As an **open-source project**, Titania-Q aims to democratize database management
 2. Select your preferred AI provider:
    - **OpenAI**: GPT-4o, GPT-4o-mini, GPT-4-turbo, GPT-3.5-turbo
    - **Google Gemini**: gemini-1.5-pro, gemini-1.5-flash, gemini-1.0-pro
+   - **Anthropic Claude**: claude-3-5-sonnet, claude-3-5-haiku, claude-3-opus
    - **Ollama**: Local models (llama2, codellama, mistral, etc.)
-3. Enter your API key (for OpenAI and Gemini)
+3. Enter your API key (for OpenAI, Gemini, and Anthropic)
 4. Choose a model from the dropdown
 5. Save configuration
 
@@ -179,8 +188,8 @@ As an **open-source project**, Titania-Q aims to democratize database management
 
 - **OpenAI**: GPT-4o, GPT-4o-mini, GPT-4-turbo, GPT-3.5-turbo
 - **Google Gemini**: gemini-1.5-pro, gemini-1.5-flash, gemini-1.0-pro
+- **Anthropic Claude**: claude-3-5-sonnet, claude-3-5-haiku, claude-3-opus
 - **Ollama**: Local models (llama2, codellama, mistral, etc.)
-- **Anthropic**: _Coming soon_ (limited support in development)
 
 ### Database Support
 
@@ -257,7 +266,7 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 - [Tauri](https://tauri.app/) - Desktop app framework
 - [Next.js](https://nextjs.org/) - React framework
-- [AI SDK](https://sdk.vercel.ai/) - AI integration
+- [Rust HTTP Client](https://docs.rs/reqwest/) - AI integration
 - [Tailwind CSS](https://tailwindcss.com/) - Styling framework
 - [Lucide React](https://lucide.dev/) - Beautiful icons
 - [Mermaid.js](https://mermaid.js.org/) - Diagram generation
@@ -273,14 +282,24 @@ If you encounter any issues or have questions:
 
 ## 🗺️ Roadmap
 
-- [ ] macOS and Linux support
-- [ ] Additional database types (Oracle, SQL Server)
-- [ ] Team collaboration features
-- [ ] Advanced query optimization
-- [ ] Database migration tools
-- [ ] Custom theme support
-- [ ] Plugin system
-- [ ] Full Anthropic Claude support
+### 🚀 Upcoming Features
+
+- [ ] **macOS and Linux support** - Cross-platform compatibility
+- [ ] **Additional database types** - Oracle, SQL Server, MariaDB
+- [ ] **Team collaboration features** - Multi-user support, shared queries
+- [ ] **Advanced query optimization** - Performance analysis and suggestions
+- [ ] **Database migration tools** - Schema migration and data transfer
+- [ ] **Custom theme support** - Dark/light themes and customization
+- [ ] **Plugin system** - Extensible architecture for custom features
+- [ ] **Export functionality** - Export query results to CSV, Excel, JSON
+- [ ] **Virtual scrolling** - Enhanced performance for large datasets
+- [ ] **Diagram export** - Export diagrams as images or PDF
+- [ ] **Custom query editor** - Syntax highlighting and advanced editing
+- [ ] **Import functionality** - Import data from various formats
+- [ ] **Advanced filtering** - Complex query builder interface
+- [ ] **Real-time collaboration** - Live editing and sharing
+- [ ] **Query templates** - Pre-built query templates and snippets
+- [ ] **Performance monitoring** - Database performance metrics and alerts
 
 ---
 
