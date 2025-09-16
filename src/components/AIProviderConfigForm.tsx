@@ -126,22 +126,12 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
       }
     }
 
-    // For other providers, test with a simple API call
+    // For other providers, use Tauri command
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/validate-ai-key",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ aiConfig: config }),
-        }
-      );
-
-      const result = await response.json();
-      return result.valid;
+      const { AIService } = await import("@/lib/ai-service");
+      return await AIService.validateAIKey(config);
     } catch (error) {
+      console.error("API key validation error:", error);
       return false;
     }
   };
@@ -301,11 +291,25 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
 
     setIsLoadingModels(true);
 
-    // Hardcoded models for each provider
-    const models = getHardcodedModels(config.provider);
-    setAvailableModels(models);
-
-    setIsLoadingModels(false);
+    try {
+      // Try to get models from Tauri command first
+      const { AIService } = await import("@/lib/ai-service");
+      const models = await AIService.getAvailableModels(config);
+      if (models && models.length > 0) {
+        setAvailableModels(models);
+      } else {
+        // Fallback to hardcoded models
+        const hardcodedModels = getHardcodedModels(config.provider);
+        setAvailableModels(hardcodedModels);
+      }
+    } catch (error) {
+      console.error("Failed to load models from Tauri:", error);
+      // Fallback to hardcoded models
+      const models = getHardcodedModels(config.provider);
+      setAvailableModels(models);
+    } finally {
+      setIsLoadingModels(false);
+    }
   };
 
   const getHardcodedModels = (provider: string): string[] => {
