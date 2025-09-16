@@ -17,7 +17,7 @@ As an **open-source project**, Titania-Q aims to democratize database management
 
 ## ✨ Features
 
-### �� AI-Powered SQL Generation
+### 🎯 AI-Powered SQL Generation
 
 <div align="center">
   <img src="screenshot/aiqueryinterface.png" alt="AI Query Interface" width="800"/>
@@ -42,7 +42,7 @@ As an **open-source project**, Titania-Q aims to democratize database management
 - Advanced data filtering and searching capabilities
 - Export query results to various formats
 
-### �� Visual Database Diagrams
+### 🔍 Visual Database Diagrams
 
 - Interactive relationship diagrams with zoom/pan functionality
 - AI-generated database relationship visualization
@@ -74,7 +74,7 @@ As an **open-source project**, Titania-Q aims to democratize database management
 - Offline capability for local databases
 - Automatic updates
 
-### �� Advanced Features
+### ⚡ Advanced Features
 
 - Query logging and history
 - Custom query editor with syntax highlighting
@@ -119,7 +119,6 @@ As an **open-source project**, Titania-Q aims to democratize database management
    ```bash
    git clone https://github.com/brillianodhiya/titania-q.git
    cd titania-q
-
    ```
 
 2. **Install dependencies**
@@ -174,7 +173,7 @@ As an **open-source project**, Titania-Q aims to democratize database management
 3. Use zoom and pan to explore the diagram
 4. Export the diagram if needed
 
-## �� Configuration
+## ⚙️ Configuration
 
 ### AI Providers
 
@@ -244,17 +243,17 @@ Your support helps us:
 **Donation Links:**
 
 - 🇮🇩 [Saweria](https://saweria.co/KanrishaB) - Support via Saweria
-- 🇮�� [Trakteer](https://trakteer.id/kanrisha-d) - Support via Trakteer
+- 🇮🇩 [Trakteer](https://trakteer.id/kanrisha-d) - Support via Trakteer
 
-### 🌟 Star the Repository
+### ⭐ Star the Repository
 
 If you can't contribute financially, starring the repository helps us reach more developers who might benefit from this tool.
 
-## �� License
+## 📄 License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
-## �� Acknowledgments
+## 🙏 Acknowledgments
 
 - [Tauri](https://tauri.app/) - Desktop app framework
 - [Next.js](https://nextjs.org/) - React framework
@@ -286,36 +285,7 @@ If you encounter any issues or have questions:
 ---
 
 <div align="center">
-  <strong>Made with ❤️ by Brilliano Dhiya (2025)</strong>
+  <strong>Made with ❤️ by Brilliano Dhiya / Kanrishaurus (2025)</strong>
   <br>
   <em>Empowering developers with AI-powered database management</em>
 </div>
-```
-
-Sekarang README.md sudah benar-benar diperbarui dengan:
-
-## ✅ **Perubahan yang Diterapkan:**
-
-1. **📸 Screenshot Integration** - Menampilkan 4 screenshot dari folder `screenshot/`
-2. **�� Donation Links** - Link Saweria dan Trakteer
-3. **�� Mission Statement** - Penjelasan tujuan proyek open-source
-4. **📖 Detailed Usage Guide** - Panduan lengkap penggunaan
-5. **�� Accurate AI Provider Info** - Menghapus Anthropic dari fitur utama
-6. **🗺️ Roadmap** - Rencana pengembangan
-7. **�� Community Support** - Informasi dukungan dan kontribusi
-
-Sekarang mari commit dan push perubahan ini:
-
-```bash
-git add README.md
-git commit -m "�� Update README.md with comprehensive project documentation
-
-- Add mission statement and project goals
-- Include screenshots from screenshot/ folder
-- Add donation links (Saweria & Trakteer)
-- Update AI provider info (remove Anthropic from main features)
-- Add detailed usage guide and configuration
-- Include roadmap and community support info
-- Professional presentation for open-source project"
-git push origin main
-```
