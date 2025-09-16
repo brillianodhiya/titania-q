@@ -3,6 +3,10 @@
 **AI-powered database management tool with Tauri desktop app**
 
 <div align="center">
+  <a href="README-ID.md">🇮🇩 Bahasa Indonesia</a> | <a href="README.md">🇺🇸 English</a>
+</div>
+
+<div align="center">
   <img src="screenshot/connection.png" alt="Database Connection" width="800"/>
   <p><em>Connect to multiple database types with ease</em></p>
 </div>

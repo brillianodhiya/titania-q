@@ -3,6 +3,10 @@
 **Alat manajemen database bertenaga AI dengan aplikasi desktop Tauri**
 
 <div align="center">
+  <a href="README-ID.md">🇮🇩 Bahasa Indonesia</a> | <a href="README.md">🇺🇸 English</a>
+</div>
+
+<div align="center">
   <img src="screenshot/connection.png" alt="Koneksi Database" width="800"/>
   <p><em>Terhubung ke berbagai jenis database dengan mudah</em></p>
 </div>
