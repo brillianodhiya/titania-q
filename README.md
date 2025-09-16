@@ -27,24 +27,27 @@ Titania-Q is a modern, standalone desktop application built with Tauri, Next.js,
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - Rust 1.70+
 - Database server (MySQL, PostgreSQL, SQLite, or MongoDB)
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/brillianodhiya/titania-q.git
    cd titania-q
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Run in development mode**
+
    ```bash
    npm run tauri:dev
    ```
@@ -57,12 +60,14 @@ Titania-Q is a modern, standalone desktop application built with Tauri, Next.js,
 ## 📖 Usage
 
 ### Database Connection
+
 1. Open the application
 2. Navigate to Database Management Panel
 3. Enter your database connection details
 4. Click "Connect" to establish connection
 
 ### AI Configuration
+
 1. Go to AI Provider Settings
 2. Select your preferred AI provider
 3. Enter your API key
@@ -70,6 +75,7 @@ Titania-Q is a modern, standalone desktop application built with Tauri, Next.js,
 5. Save configuration
 
 ### SQL Generation
+
 1. Use the AI Query Interface
 2. Type your request in natural language
 3. Review the generated SQL
@@ -78,14 +84,16 @@ Titania-Q is a modern, standalone desktop application built with Tauri, Next.js,
 ## 🔧 Configuration
 
 ### AI Providers
+
 - **OpenAI**: GPT-4o, GPT-4o-mini, GPT-4-turbo
 - **Google Gemini**: gemini-1.5-pro, gemini-1.5-flash
 - **Anthropic**: Claude-3.5-Sonnet, Claude-3.5-Haiku
 - **Ollama**: Local models (llama2, codellama, etc.)
 
 ### Database Support
+
 - **MySQL**: Full support with schema analysis
-- **PostgreSQL**: Full support with schema analysis  
+- **PostgreSQL**: Full support with schema analysis
 - **SQLite**: Local database support
 - **MongoDB**: Document database support
 
@@ -114,7 +122,7 @@ titania-q/
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
