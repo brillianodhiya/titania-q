@@ -11,7 +11,7 @@
   <p><em>Terhubung ke berbagai jenis database dengan mudah</em></p>
 </div>
 
-Titania-Q adalah aplikasi desktop modern yang berdiri sendiri, dibangun dengan Tauri, Next.js, dan integrasi AI untuk manajemen database yang komprehensif. Aplikasi ini menyediakan antarmuka yang intuitif untuk operasi database, generasi SQL bertenaga AI, dan diagram relasi database visual.
+Titania-Q adalah aplikasi desktop modern yang standalone, dibangun dengan Tauri, Next.js, dan integrasi AI untuk manajemen database yang komprehensif. Aplikasi ini menyediakan antarmuka yang intuitif untuk operasi database, generasi SQL bertenaga AI, dan diagram relasi database visual.
 
 ## 🌟 Mengapa Titania-Q?
 
