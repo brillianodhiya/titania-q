@@ -357,6 +357,7 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
             <option value="ollama">Ollama (Local)</option>
             <option value="openai">OpenAI</option>
             <option value="gemini">Google Gemini</option>
+            <option value="anthropic">Anthropic Claude</option>
           </Select>
         </div>
 
@@ -371,7 +372,7 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
           </div>
         )}
 
-        {(config.provider === "openai" || config.provider === "gemini") && (
+        {(config.provider === "openai" || config.provider === "gemini" || config.provider === "anthropic") && (
           <div>
             <label className="text-sm font-medium">API Key</label>
             <Input

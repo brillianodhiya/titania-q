@@ -22,6 +22,7 @@ interface QueryInterfaceProps {
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
   setParentError: (error: string | null) => void;
+  addQueryLog?: (log: { query: string; database: string; status: "success" | "error"; executionTime?: number; rowCount?: number; error?: string }) => void;
 }
 
 export function QueryInterface({
@@ -31,6 +32,7 @@ export function QueryInterface({
   isLoading,
   setIsLoading,
   setParentError,
+  addQueryLog,
 }: QueryInterfaceProps) {
   const [query, setQuery] = useState("");
   const [generatedSQL, setGeneratedSQL] = useState("");
@@ -97,6 +99,15 @@ export function QueryInterface({
         // Execute the generated SQL
         const results = await executeQuery(sql);
         onResults(results);
+        
+        // Add to query log
+        if (addQueryLog) {
+          addQueryLog({
+            query: sql,
+            database: "AI Generated",
+            status: "success",
+          });
+        }
       }
     } catch (error) {
       console.error("Query execution error:", error);
@@ -126,6 +137,16 @@ export function QueryInterface({
 
       setLocalError(errorMessage);
       setParentError(errorMessage);
+      
+      // Add failed query to log
+      if (addQueryLog) {
+        addQueryLog({
+          query: generatedSQL || query,
+          database: "AI Generated",
+          status: "error",
+          error: errorMessage,
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -141,6 +162,15 @@ export function QueryInterface({
     try {
       const results = await executeQuery(generatedSQL);
       onResults(results);
+      
+      // Add to query log
+      if (addQueryLog) {
+        addQueryLog({
+          query: generatedSQL,
+          database: "Manual Execute",
+          status: "success",
+        });
+      }
     } catch (error) {
       console.error("SQL execution error:", error);
       let errorMessage = "Gagal mengeksekusi SQL";
@@ -169,6 +199,16 @@ export function QueryInterface({
 
       setLocalError(errorMessage);
       setParentError(errorMessage);
+      
+      // Add failed query to log
+      if (addQueryLog) {
+        addQueryLog({
+          query: generatedSQL,
+          database: "Manual Execute",
+          status: "error",
+          error: errorMessage,
+        });
+      }
     } finally {
       setIsLoading(false);
     }
