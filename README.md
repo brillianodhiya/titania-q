@@ -1,4 +1,3 @@
-````markdown:README.md
 # Titania-Q 🚀
 
 **AI-powered database management tool with Tauri desktop app**
@@ -19,6 +18,7 @@ As an **open-source project**, Titania-Q aims to democratize database management
 ## ✨ Features
 
 ### �� AI-Powered SQL Generation
+
 <div align="center">
   <img src="screenshot/aiqueryinterface.png" alt="AI Query Interface" width="800"/>
   <p><em>Generate SQL queries using natural language with multiple AI providers</em></p>
@@ -30,6 +30,7 @@ As an **open-source project**, Titania-Q aims to democratize database management
 - Query validation and optimization suggestions
 
 ### 📊 Comprehensive Database Management
+
 <div align="center">
   <img src="screenshot/tableview.png" alt="Table View" width="800"/>
   <p><em>View and manage your database tables with advanced features</em></p>
@@ -42,12 +43,14 @@ As an **open-source project**, Titania-Q aims to democratize database management
 - Export query results to various formats
 
 ### �� Visual Database Diagrams
+
 - Interactive relationship diagrams with zoom/pan functionality
 - AI-generated database relationship visualization
 - Export diagrams as images or PDF
 - Real-time schema updates
 
 ### 💬 AI Consultation
+
 <div align="center">
   <img src="screenshot/aiconsult.png" alt="AI Consultation" width="800"/>
   <p><em>Get AI-powered insights about your database structure and data</em></p>
@@ -59,17 +62,20 @@ As an **open-source project**, Titania-Q aims to democratize database management
 - Receive suggestions for query improvements
 
 ### 🌍 Multi-language Support
+
 - English and Indonesian interface
 - Localized error messages and tooltips
 - Easy language switching
 
 ### 🖥️ Standalone Desktop App
+
 - No server required, runs natively on Windows
 - Lightweight and fast performance
 - Offline capability for local databases
 - Automatic updates
 
 ### �� Advanced Features
+
 - Query logging and history
 - Custom query editor with syntax highlighting
 - Database insights and analytics
@@ -96,6 +102,7 @@ As an **open-source project**, Titania-Q aims to democratize database management
 ### Quick Start (Download)
 
 1. **Download the latest release**
+
    - Go to [Releases](https://github.com/brillianodhiya/titania-q/releases)
    - Download `Titania-Q_0.1.0_x64_en-US.msi` (Windows Installer)
    - Or download `Titania-Q_0.1.0_x64-setup.exe` (Portable Setup)
@@ -112,7 +119,8 @@ As an **open-source project**, Titania-Q aims to democratize database management
    ```bash
    git clone https://github.com/brillianodhiya/titania-q.git
    cd titania-q
-````
+
+   ```
 
 2. **Install dependencies**
 
