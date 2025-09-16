@@ -273,7 +273,7 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ### Special Thanks
 
-- [@zulfaah](https://github.com/zulfaah) - For continuous support and assistance throughout this project development
+- [@zulfaah](https://github.com/zulfaah) - My beloved wife, for continuous support and assistance throughout this project development
 
 ## 📞 Support & Community
 
