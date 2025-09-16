@@ -271,6 +271,10 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 - [Lucide React](https://lucide.dev/) - Beautiful icons
 - [Mermaid.js](https://mermaid.js.org/) - Diagram generation
 
+### Special Thanks
+
+- [@zulfaah](https://github.com/zulfaah) - For continuous support and assistance throughout this project development
+
 ## 📞 Support & Community
 
 If you encounter any issues or have questions:
