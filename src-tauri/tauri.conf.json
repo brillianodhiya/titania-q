@@ -24,7 +24,7 @@
     "bundle": {
       "active": true,
       "category": "DeveloperTool",
-      "copyright": "",
+      "copyright": "Copyright (c) 2024 Brilliano Dhiya. All rights reserved.",
       "deb": {
         "depends": []
       },

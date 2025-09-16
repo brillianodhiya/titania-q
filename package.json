@@ -2,6 +2,15 @@
   "name": "titania-q",
   "version": "0.1.0",
   "private": true,
+  "description": "AI-powered database management tool with Tauri desktop app",
+  "author": "Brilliano Dhiya",
+  "license": "MIT",
+  "keywords": ["database", "ai", "tauri", "nextjs", "sql", "management"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brillianodhiya/titania-q.git"
+  },
+  "homepage": "https://github.com/brillianodhiya/titania-q#readme",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
