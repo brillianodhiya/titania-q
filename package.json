@@ -29,11 +29,7 @@
     "tauri:build": "npm run build:tauri && tauri build"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^2.0.17",
-    "@ai-sdk/google": "^2.0.14",
-    "@ai-sdk/openai": "^2.0.30",
     "@tauri-apps/api": "^1.5.0",
-    "ai": "^5.0.44",
     "clsx": "^2.0.0",
     "lucide-react": "^0.294.0",
     "next": "14.0.4",

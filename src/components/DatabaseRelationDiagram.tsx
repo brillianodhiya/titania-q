@@ -780,30 +780,15 @@ export function DatabaseRelationDiagram({
       // Step 1: Call AI API
       setAiProgress(25);
 
-      const response = await fetch(
-        "http://localhost:3000/api/generate-diagram",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            schemaDescription: JSON.stringify(schema),
-            aiConfig: aiConfig,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("AI API error response:", errorText);
-        throw new Error(
-          `Failed to generate AI diagram: ${response.status} ${errorText}`
-        );
+      if (!aiConfig) {
+        throw new Error("AI configuration not available");
       }
 
-      const result = await response.json();
-      const { diagram } = result;
+      const { AIService } = await import("@/lib/ai-service");
+      const diagram = await AIService.generateDiagram(
+        JSON.stringify(schema),
+        aiConfig
+      );
 
       if (!diagram) {
         throw new Error("No diagram returned from AI API");

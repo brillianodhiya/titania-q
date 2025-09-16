@@ -15,6 +15,7 @@ import {
   Copy,
   Check,
 } from "lucide-react";
+import { AIService } from "@/lib/ai-service";
 
 interface DatabaseInsightsProps {
   schema: DatabaseSchema | null;
@@ -38,26 +39,8 @@ export function DatabaseInsights({ schema, aiConfig }: DatabaseInsightsProps) {
     setError(null);
 
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/generate-insights",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            schema,
-            aiConfig,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Failed to generate insights: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      setInsights(data.insights);
+      const insights = await AIService.generateInsights(null, schema, aiConfig);
+      setInsights(insights);
       setIsExpanded(true);
     } catch (err) {
       setError(

@@ -21,6 +21,9 @@ pub enum AppError {
     #[error("AI service error: {0}")]
     AIServiceError(String),
     
+    #[error("AI error: {0}")]
+    AIError(String),
+    
     #[error("Internal error: {0}")]
     InternalError(String),
 }

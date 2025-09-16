@@ -15,6 +15,9 @@ import {
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { AIService } from "@/lib/ai-service";
+import { AIProviderConfig } from "@/types/ai";
+import { DatabaseSchema } from "@/types/database";
 
 export interface ConsultationMessage {
   id: string;
@@ -28,6 +31,8 @@ interface AIConsultationProps {
   onSendMessage: (message: string) => Promise<void>;
   messages: ConsultationMessage[];
   isGenerating: boolean;
+  schema?: DatabaseSchema | null;
+  aiConfig?: AIProviderConfig | null;
 }
 
 export function AIConsultation({
@@ -35,6 +40,8 @@ export function AIConsultation({
   onSendMessage,
   messages,
   isGenerating,
+  schema,
+  aiConfig,
 }: AIConsultationProps) {
   const { t } = useI18n();
   const [inputMessage, setInputMessage] = useState("");

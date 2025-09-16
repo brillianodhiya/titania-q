@@ -131,7 +131,7 @@ export default function Home() {
   };
 
   const handleConsultationMessage = async (message: string) => {
-    if (!schema) return;
+    if (!schema || !aiConfig) return;
 
     // Add user message
     const userMessage: ConsultationMessage = {
@@ -145,32 +145,18 @@ export default function Home() {
     setIsConsulting(true);
 
     try {
-      const response = await fetch(
-        "http://localhost:3000/api/consult-database",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            question: message,
-            schemaDescription: JSON.stringify(schema),
-            aiConfig: aiConfig,
-          }),
-        }
+      const { AIService } = await import("@/lib/ai-service");
+      const response = await AIService.consultDatabase(
+        message,
+        JSON.stringify(schema),
+        aiConfig
       );
-
-      if (!response.ok) {
-        throw new Error("Failed to get consultation response");
-      }
-
-      const data = await response.json();
 
       // Add AI response
       const aiMessage: ConsultationMessage = {
         id: (Date.now() + 1).toString(),
         type: "ai",
-        content: data.response,
+        content: response,
         timestamp: new Date(),
       };
       setConsultationMessages((prev) => [...prev, aiMessage]);
@@ -399,6 +385,8 @@ export default function Home() {
                 onSendMessage={handleConsultationMessage}
                 messages={consultationMessages}
                 isGenerating={isConsulting}
+                schema={schema}
+                aiConfig={aiConfig}
               />
             </div>
           )}

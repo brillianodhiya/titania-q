@@ -23,6 +23,7 @@ bson = "2.8"
 anyhow = "1.0"
 thiserror = "1.0"
 chrono = { version = "0.4", features = ["serde"] }
+reqwest = { version = "0.11", features = ["json", "rustls-tls"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

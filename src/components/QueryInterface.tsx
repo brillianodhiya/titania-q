@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { DatabaseSchema } from "@/types/database";
 import { AIProviderConfig } from "@/types/ai";
 import { Send, Loader2 } from "lucide-react";
+import { AIService } from "@/lib/ai-service";
 
 interface QueryInterfaceProps {
   schema: DatabaseSchema | null;
@@ -51,35 +52,14 @@ export function QueryInterface({
       console.log("Generating SQL for query:", naturalLanguageQuery);
       console.log("AI Config:", aiConfig);
 
-      const response = await fetch("http://localhost:3000/api/generate-sql", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          naturalLanguageQuery: naturalLanguageQuery,
-          schemaDescription: JSON.stringify(schema),
-          aiConfig: aiConfig,
-        }),
-      });
+      const sql = await AIService.generateSQL(
+        naturalLanguageQuery,
+        JSON.stringify(schema),
+        aiConfig
+      );
 
-      console.log("API Response status:", response.status);
-      const data = await response.json();
-      console.log("API Response data:", data);
-
-      if (!response.ok) {
-        // Extract error message from API response
-        const errorMessage = data.error || "Failed to generate SQL";
-        console.error("API Error:", errorMessage);
-        throw new Error(errorMessage);
-      }
-
-      if (!data.sql) {
-        throw new Error("No SQL generated from AI");
-      }
-
-      console.log("Generated SQL:", data.sql);
-      return data.sql;
+      console.log("Generated SQL:", sql);
+      return sql;
     } catch (error) {
       console.error("Error generating SQL:", error);
       throw error;
@@ -111,11 +91,13 @@ export function QueryInterface({
     try {
       // Generate SQL from natural language
       const sql = await generateSQL(query);
-      setGeneratedSQL(sql);
+      if (sql) {
+        setGeneratedSQL(sql);
 
-      // Execute the generated SQL
-      const results = await executeQuery(sql);
-      onResults(results);
+        // Execute the generated SQL
+        const results = await executeQuery(sql);
+        onResults(results);
+      }
     } catch (error) {
       console.error("Query execution error:", error);
       let errorMessage = "Terjadi kesalahan saat memproses query";
