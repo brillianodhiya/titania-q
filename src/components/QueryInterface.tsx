@@ -22,7 +22,14 @@ interface QueryInterfaceProps {
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
   setParentError: (error: string | null) => void;
-  addQueryLog?: (log: { query: string; database: string; status: "success" | "error"; executionTime?: number; rowCount?: number; error?: string }) => void;
+  addQueryLog?: (log: {
+    query: string;
+    database: string;
+    status: "success" | "error";
+    executionTime?: number;
+    rowCount?: number;
+    error?: string;
+  }) => void;
 }
 
 export function QueryInterface({
@@ -99,7 +106,7 @@ export function QueryInterface({
         // Execute the generated SQL
         const results = await executeQuery(sql);
         onResults(results);
-        
+
         // Add to query log
         if (addQueryLog) {
           addQueryLog({
@@ -137,7 +144,7 @@ export function QueryInterface({
 
       setLocalError(errorMessage);
       setParentError(errorMessage);
-      
+
       // Add failed query to log
       if (addQueryLog) {
         addQueryLog({
@@ -162,7 +169,7 @@ export function QueryInterface({
     try {
       const results = await executeQuery(generatedSQL);
       onResults(results);
-      
+
       // Add to query log
       if (addQueryLog) {
         addQueryLog({
@@ -199,7 +206,7 @@ export function QueryInterface({
 
       setLocalError(errorMessage);
       setParentError(errorMessage);
-      
+
       // Add failed query to log
       if (addQueryLog) {
         addQueryLog({

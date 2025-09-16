@@ -372,7 +372,9 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
           </div>
         )}
 
-        {(config.provider === "openai" || config.provider === "gemini" || config.provider === "anthropic") && (
+        {(config.provider === "openai" ||
+          config.provider === "gemini" ||
+          config.provider === "anthropic") && (
           <div>
             <label className="text-sm font-medium">API Key</label>
             <Input

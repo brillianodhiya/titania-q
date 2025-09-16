@@ -400,15 +400,15 @@ export default function Home() {
               <h2 className="text-base font-semibold mb-3 text-foreground">
                 {t("aiQueryInterface")}
               </h2>
-            <QueryInterface
-              schema={schema}
-              aiConfig={aiConfig}
-              onResults={handleQueryResults}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-              setParentError={setError}
-              addQueryLog={addQueryLog}
-            />
+              <QueryInterface
+                schema={schema}
+                aiConfig={aiConfig}
+                onResults={handleQueryResults}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                setParentError={setError}
+                addQueryLog={addQueryLog}
+              />
             </div>
           )}
 
