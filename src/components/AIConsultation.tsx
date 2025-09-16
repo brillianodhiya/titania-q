@@ -13,6 +13,8 @@ import {
   Loader2,
   Sparkles,
 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export interface ConsultationMessage {
   id: string;
@@ -122,8 +124,100 @@ export function AIConsultation({
                           : "bg-muted"
                       }`}
                     >
-                      <div className="text-sm whitespace-pre-wrap">
-                        {message.content}
+                      <div className="text-sm">
+                        {message.type === "ai" ? (
+                          <div className="prose prose-sm max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-code:text-foreground prose-pre:bg-muted prose-pre:text-foreground prose-blockquote:text-foreground prose-li:text-foreground">
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              components={{
+                                code: ({
+                                  children,
+                                  className,
+                                  ...props
+                                }: any) => {
+                                  const isInline =
+                                    !className?.includes("language-");
+                                  if (isInline) {
+                                    return (
+                                      <code
+                                        className="bg-muted px-1 py-0.5 rounded text-sm font-mono"
+                                        {...props}
+                                      >
+                                        {children}
+                                      </code>
+                                    );
+                                  }
+                                  return (
+                                    <pre className="bg-muted p-3 rounded-lg overflow-x-auto">
+                                      <code className={className} {...props}>
+                                        {children}
+                                      </code>
+                                    </pre>
+                                  );
+                                },
+                                h1: ({ children }) => (
+                                  <h1 className="text-lg font-bold mb-2">
+                                    {children}
+                                  </h1>
+                                ),
+                                h2: ({ children }) => (
+                                  <h2 className="text-base font-semibold mb-2">
+                                    {children}
+                                  </h2>
+                                ),
+                                h3: ({ children }) => (
+                                  <h3 className="text-sm font-semibold mb-1">
+                                    {children}
+                                  </h3>
+                                ),
+                                ul: ({ children }) => (
+                                  <ul className="list-disc list-inside mb-2 space-y-1">
+                                    {children}
+                                  </ul>
+                                ),
+                                ol: ({ children }) => (
+                                  <ol className="list-decimal list-inside mb-2 space-y-1">
+                                    {children}
+                                  </ol>
+                                ),
+                                p: ({ children }) => (
+                                  <p className="mb-2 last:mb-0">{children}</p>
+                                ),
+                                blockquote: ({ children }) => (
+                                  <blockquote className="border-l-4 border-primary pl-4 italic my-2">
+                                    {children}
+                                  </blockquote>
+                                ),
+                                table: ({ children }) => (
+                                  <div className="overflow-x-auto my-2">
+                                    <table className="min-w-full border border-border rounded-lg">
+                                      {children}
+                                    </table>
+                                  </div>
+                                ),
+                                thead: ({ children }) => (
+                                  <thead className="bg-muted">{children}</thead>
+                                ),
+                                th: ({ children }) => (
+                                  <th className="border border-border px-3 py-2 text-left font-semibold">
+                                    {children}
+                                  </th>
+                                ),
+                                td: ({ children }) => (
+                                  <td className="border border-border px-3 py-2">
+                                    {children}
+                                  </td>
+                                ),
+                              }}
+                            >
+                              {message.content}
+                            </ReactMarkdown>
+                          </div>
+                        ) : (
+                          <div className="whitespace-pre-wrap">
+                            {message.content}
+                          </div>
+                        )}
                       </div>
                       <div
                         className={`text-xs mt-1 ${

@@ -48,26 +48,37 @@ export function QueryInterface({
     }
 
     try {
-      const response = await fetch("/api/generate-sql", {
+      console.log("Generating SQL for query:", naturalLanguageQuery);
+      console.log("AI Config:", aiConfig);
+
+      const response = await fetch("http://localhost:3000/api/generate-sql", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          query: naturalLanguageQuery,
-          schema: schema,
+          naturalLanguageQuery: naturalLanguageQuery,
+          schemaDescription: JSON.stringify(schema),
           aiConfig: aiConfig,
         }),
       });
 
+      console.log("API Response status:", response.status);
       const data = await response.json();
+      console.log("API Response data:", data);
 
       if (!response.ok) {
         // Extract error message from API response
         const errorMessage = data.error || "Failed to generate SQL";
+        console.error("API Error:", errorMessage);
         throw new Error(errorMessage);
       }
 
+      if (!data.sql) {
+        throw new Error("No SQL generated from AI");
+      }
+
+      console.log("Generated SQL:", data.sql);
       return data.sql;
     } catch (error) {
       console.error("Error generating SQL:", error);
@@ -107,7 +118,7 @@ export function QueryInterface({
       onResults(results);
     } catch (error) {
       console.error("Query execution error:", error);
-      let errorMessage = "Query failed";
+      let errorMessage = "Terjadi kesalahan saat memproses query";
 
       if (error instanceof Error) {
         errorMessage = error.message;
@@ -117,7 +128,18 @@ export function QueryInterface({
           errorMessage = (error as any).QueryExecutionFailed;
         } else if ("message" in error) {
           errorMessage = (error as any).message;
+        } else if ("error" in error) {
+          errorMessage = (error as any).error;
         }
+      }
+
+      // If error message is still generic, provide more context
+      if (
+        errorMessage === "Query failed" ||
+        errorMessage === "Terjadi kesalahan saat memproses query"
+      ) {
+        errorMessage =
+          "Gagal menghasilkan atau mengeksekusi SQL. Periksa konfigurasi AI dan coba lagi.";
       }
 
       setLocalError(errorMessage);
@@ -139,7 +161,7 @@ export function QueryInterface({
       onResults(results);
     } catch (error) {
       console.error("SQL execution error:", error);
-      let errorMessage = "Query execution failed";
+      let errorMessage = "Gagal mengeksekusi SQL";
 
       if (error instanceof Error) {
         errorMessage = error.message;
@@ -149,7 +171,18 @@ export function QueryInterface({
           errorMessage = (error as any).QueryExecutionFailed;
         } else if ("message" in error) {
           errorMessage = (error as any).message;
+        } else if ("error" in error) {
+          errorMessage = (error as any).error;
         }
+      }
+
+      // If error message is still generic, provide more context
+      if (
+        errorMessage === "Query execution failed" ||
+        errorMessage === "Gagal mengeksekusi SQL"
+      ) {
+        errorMessage =
+          "SQL tidak valid atau ada masalah dengan database. Periksa sintaks SQL dan coba lagi.";
       }
 
       setLocalError(errorMessage);

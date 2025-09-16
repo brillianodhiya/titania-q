@@ -27,6 +27,7 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
   const [apiKeyValidationError, setApiKeyValidationError] = useState<
     string | null
   >(null);
+  const [justSaved, setJustSaved] = useState(false);
 
   // Load saved config from localStorage and Tauri on component mount
   useEffect(() => {
@@ -41,6 +42,12 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
   }, [config.provider, config.api_key]);
 
   const loadSavedConfig = async () => {
+    // Don't reload if we just saved to prevent overriding the current state
+    if (justSaved) {
+      setJustSaved(false);
+      return;
+    }
+
     try {
       // First try to load from Tauri (most recent)
       const { invoke } = await import("@tauri-apps/api/tauri");
@@ -48,7 +55,10 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
         "get_ai_config"
       );
       if (savedConfig && isValidConfig(savedConfig)) {
+        console.log("Loading saved config from Tauri:", savedConfig);
         setConfig(savedConfig);
+        // Load available models for the provider
+        await loadAvailableModels(savedConfig);
         // Only mark as configured if model is also present
         if (savedConfig.model) {
           setIsConfigured(true);
@@ -66,7 +76,10 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
         STORAGE_KEYS.AI_CONFIG
       );
       if (savedConfig && isValidConfig(savedConfig)) {
+        console.log("Loading saved config from localStorage:", savedConfig);
         setConfig(savedConfig);
+        // Load available models for the provider
+        await loadAvailableModels(savedConfig);
         // Only mark as configured if model is also present
         if (savedConfig.model) {
           setIsConfigured(true);
@@ -115,13 +128,16 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
 
     // For other providers, test with a simple API call
     try {
-      const response = await fetch("/api/validate-ai-key", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ aiConfig: config }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/validate-ai-key",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ aiConfig: config }),
+        }
+      );
 
       const result = await response.json();
       return result.valid;
@@ -134,6 +150,13 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
     e.preventDefault();
     setIsSaving(true);
     setApiKeyValidationError(null);
+
+    console.log("AI Config Form Submit:", {
+      provider: config.provider,
+      hasApiKey: !!config.api_key,
+      hasModel: !!config.model,
+      baseUrl: config.base_url,
+    });
 
     try {
       // First validate basic config (without model)
@@ -148,7 +171,9 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
       if (config.model) {
         // Validate API key
         setIsValidatingApiKey(true);
+        console.log("Validating API key for provider:", config.provider);
         const isValid = await validateApiKey(config);
+        console.log("API key validation result:", isValid);
 
         if (!isValid) {
           setApiKeyValidationError("Invalid API key or connection failed");
@@ -161,10 +186,13 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
         // Save config to localStorage
         saveToStorage(STORAGE_KEYS.AI_CONFIG, config);
 
+        console.log("AI config saved successfully");
         setIsConfigured(true);
+        setJustSaved(true);
         onConfig(config);
       } else {
         // No model selected, load models directly (no API key validation needed)
+        console.log("Loading available models for provider:", config.provider);
         await loadAvailableModels(config);
       }
     } catch (err) {
@@ -179,14 +207,26 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
   const handleInputChange = (field: keyof AIProviderConfig, value: string) => {
     // Allow model changes (including empty) for user selection
 
-    // Reset configured status when any field changes
-    setIsConfigured(false);
+    // Only reset configured status if it's a critical field change
+    if (field === "provider" || field === "api_key" || field === "base_url") {
+      setIsConfigured(false);
+    }
 
     setConfig((prev) => {
       const newConfig = {
         ...prev,
         [field]: value,
       };
+
+      // If model is selected and other required fields are present, mark as configured
+      if (field === "model" && value && isValidConfigForSave(newConfig)) {
+        setIsConfigured(true);
+        onConfig(newConfig);
+      } else if (field === "model" && !value) {
+        // If model is cleared, mark as not configured
+        setIsConfigured(false);
+      }
+
       return newConfig;
     });
   };
@@ -200,22 +240,23 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
     // Reset configured status when provider changes
     setIsConfigured(false);
 
-    setConfig((prev) => ({
-      ...prev,
+    const newConfig = {
+      ...config,
       provider: provider as AIProviderConfig["provider"],
       model: "", // Always start with empty model
       base_url: provider === "ollama" ? "http://localhost:11434" : undefined,
       // Keep existing API key when switching providers
-      api_key: prev.api_key,
-    }));
+      api_key: config.api_key,
+    };
+
+    setConfig(newConfig);
 
     if (provider === "ollama") {
-      loadOllamaModels({
-        ...config,
-        provider: provider as AIProviderConfig["provider"],
-        model: "",
-        base_url: provider === "ollama" ? "http://localhost:11434" : undefined,
-      });
+      loadOllamaModels(newConfig);
+    } else {
+      // Load hardcoded models for cloud providers
+      const models = getHardcodedModels(provider);
+      setAvailableModels(models);
     }
   };
 
@@ -230,13 +271,23 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
   const loadOllamaModels = async (config: AIProviderConfig) => {
     if (config.provider !== "ollama") return;
 
+    console.log("Loading Ollama models from:", config.base_url);
     setIsLoadingModels(true);
     try {
       const response = await fetch(`${config.base_url}/api/tags`);
+      console.log("Ollama API response status:", response.status);
       if (response.ok) {
         const data = await response.json();
+        console.log("Ollama API response data:", data);
         const models = data.models?.map((model: any) => model.name) || [];
+        console.log("Extracted models:", models);
         setAvailableModels(models);
+      } else {
+        console.error(
+          "Ollama API error:",
+          response.status,
+          response.statusText
+        );
       }
     } catch (error) {
       console.error("Failed to load Ollama models:", error);
@@ -350,25 +401,17 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
               </Button>
             )}
           </div>
-          {config.provider === "ollama" ? (
-            <Input
-              value={config.model}
-              onChange={(e) => handleInputChange("model", e.target.value)}
-              placeholder="Model name"
-            />
-          ) : (
-            <Select
-              value={config.model}
-              onChange={(e) => handleInputChange("model", e.target.value)}
-            >
-              <option value="">Select a model</option>
-              {availableModels.map((model) => (
-                <option key={model} value={model}>
-                  {model}
-                </option>
-              ))}
-            </Select>
-          )}
+          <Select
+            value={config.model}
+            onChange={(e) => handleInputChange("model", e.target.value)}
+          >
+            <option value="">Select a model</option>
+            {availableModels.map((model) => (
+              <option key={model} value={model}>
+                {model}
+              </option>
+            ))}
+          </Select>
         </div>
 
         {/* API Key Validation Error */}
@@ -418,6 +461,8 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
             <p>Debug: availableModels.length = {availableModels.length}</p>
             <p>Debug: isLoadingModels = {isLoadingModels.toString()}</p>
             <p>Debug: provider = {config.provider}</p>
+            <p>Debug: model = "{config.model}"</p>
+            <p>Debug: isConfigured = {isConfigured.toString()}</p>
           </div>
         )}
 
@@ -463,7 +508,9 @@ export function AIProviderConfigForm({ onConfig }: AIProviderConfigFormProps) {
         {isConfigured && (
           <div className="flex items-center gap-2 text-green-600">
             <CheckCircle className="h-4 w-4" />
-            <span className="text-sm">AI provider configured</span>
+            <span className="text-sm">
+              AI provider configured - {config.provider} ({config.model})
+            </span>
           </div>
         )}
       </form>

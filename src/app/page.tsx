@@ -145,18 +145,20 @@ export default function Home() {
     setIsConsulting(true);
 
     try {
-      const response = await fetch("/api/consult-database", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message,
-          databaseSchema: schema,
-          databaseName: currentDatabaseName,
-          aiConfig: aiConfig,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/consult-database",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            question: message,
+            schemaDescription: JSON.stringify(schema),
+            aiConfig: aiConfig,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to get consultation response");

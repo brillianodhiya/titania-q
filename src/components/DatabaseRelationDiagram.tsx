@@ -53,12 +53,12 @@ export function DatabaseRelationDiagram({
       primaryTextColor: isDark ? "#f8fafc" : "#1e293b",
       primaryBorderColor: isDark ? "#475569" : "#cbd5e1",
       lineColor: isDark ? "#64748b" : "#94a3b8",
-      secondaryColor: isDark ? "#1e293b" : "#f1f5f9",
-      tertiaryColor: isDark ? "#0f172a" : "#ffffff",
+      secondaryColor: isDark ? "#1e293b" : "#1e293b", // Dark color for all columns
+      tertiaryColor: isDark ? "#0f172a" : "#1e293b", // Dark color for all columns
       background: isDark ? "#0f172a" : "#ffffff",
-      mainBkg: isDark ? "#1e293b" : "#f8fafc",
-      secondBkg: isDark ? "#334155" : "#e2e8f0",
-      tertiaryBkg: isDark ? "#475569" : "#cbd5e1",
+      mainBkg: isDark ? "#1e293b" : "#1e293b", // Dark color for all columns
+      secondBkg: isDark ? "#334155" : "#1e293b", // Dark color for all columns
+      tertiaryBkg: isDark ? "#475569" : "#1e293b", // Dark color for all columns
       // Font settings for better readability
       fontSize: "16px",
       fontFamily:
@@ -69,6 +69,479 @@ export function DatabaseRelationDiagram({
   // Initialize Mermaid with theme-aware colors
   useEffect(() => {
     const colors = getThemeColors();
+
+    // Add custom CSS for better diagram contrast - only for AI diagrams
+    const style = document.createElement("style");
+    style.id = "mermaid-custom-style";
+    style.textContent = `
+      /* Only apply aggressive overrides to AI-generated diagrams */
+      .database-diagram.ai-diagram svg {
+        filter: contrast(1.2) brightness(1.1) saturate(1.1);
+        background: white !important;
+      }
+      .database-diagram.ai-diagram .entityBox {
+        stroke-width: 2px !important;
+        stroke: #1e293b !important;
+        fill: #f1f5f9 !important;
+      }
+      .database-diagram.ai-diagram .entityLabel {
+        fill: #1e293b !important;
+        font-weight: bold !important;
+        font-size: 14px !important;
+      }
+      .database-diagram.ai-diagram .attributeBox {
+        stroke-width: 1px !important;
+        stroke: #1e293b !important;
+        fill: #1e293b !important;
+      }
+      .database-diagram.ai-diagram .attributeLabel {
+        fill: #ffffff !important;
+        font-size: 12px !important;
+        font-weight: normal !important;
+      }
+      .database-diagram.ai-diagram .relationshipLabel {
+        fill: #1e293b !important;
+        font-weight: bold !important;
+        font-size: 12px !important;
+      }
+      .database-diagram.ai-diagram .relationshipLine {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      .database-diagram.ai-diagram .relationshipLine path {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      .database-diagram.ai-diagram .relationshipLine line {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      .database-diagram.ai-diagram .er .entityBox {
+        stroke-width: 2px !important;
+        stroke: #1e293b !important;
+        fill: #f1f5f9 !important;
+      }
+      .database-diagram.ai-diagram .er .entityLabel {
+        fill: #1e293b !important;
+        font-weight: bold !important;
+        font-size: 14px !important;
+      }
+      .database-diagram.ai-diagram .er .attributeBox {
+        stroke-width: 1px !important;
+        stroke: #1e293b !important;
+        fill: #ffffff !important;
+      }
+      .database-diagram.ai-diagram .er .attributeLabel {
+        fill: #1e293b !important;
+        font-size: 12px !important;
+        font-weight: normal !important;
+      }
+      .database-diagram.ai-diagram .er .relationshipLabel {
+        fill: #1e293b !important;
+        font-weight: bold !important;
+        font-size: 12px !important;
+      }
+      .database-diagram.ai-diagram .er .relationshipLine {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      .database-diagram.ai-diagram .er .relationshipLine path {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      .database-diagram.ai-diagram .er .relationshipLine line {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      .database-diagram.ai-diagram .er .entityText {
+        fill: #1e293b !important;
+        font-weight: bold !important;
+      }
+      .database-diagram.ai-diagram .er .attributeText {
+        fill: #1e293b !important;
+        font-weight: normal !important;
+      }
+      .database-diagram.ai-diagram .er .relationshipText {
+        fill: #1e293b !important;
+        font-weight: bold !important;
+      }
+      .database-diagram.ai-diagram svg path {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      .database-diagram.ai-diagram svg line {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      .database-diagram.ai-diagram svg polyline {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      .database-diagram.ai-diagram svg polygon {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      .database-diagram.ai-diagram svg .default {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        fill: #f1f5f9 !important;
+      }
+      .database-diagram.ai-diagram svg .default path {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+      }
+      .database-diagram.ai-diagram svg .default line {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+      }
+      .database-diagram.ai-diagram svg .default polyline {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+      }
+      /* Override untuk AI diagram - garis relationship */
+      .database-diagram.ai-diagram svg g.edgePath path {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      .database-diagram.ai-diagram svg g.edgePath .path {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+      }
+      .database-diagram.ai-diagram svg g.edgeLabel {
+        fill: #1e293b !important;
+        font-weight: bold !important;
+      }
+      .database-diagram.ai-diagram svg g.edgeLabel text {
+        fill: #1e293b !important;
+        font-weight: bold !important;
+      }
+      /* Override untuk AI diagram - semua elemen garis */
+      .database-diagram.ai-diagram svg g[class*="edge"] path,
+      .database-diagram.ai-diagram svg g[class*="edge"] line,
+      .database-diagram.ai-diagram svg g[class*="edge"] polyline {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      /* Override khusus untuk AI diagram - semua elemen garis */
+      .database-diagram.ai-diagram svg path[stroke="#333333"],
+      .database-diagram.ai-diagram svg path[stroke="#333"],
+      .database-diagram.ai-diagram svg path[stroke="rgb(51, 51, 51)"],
+      .database-diagram.ai-diagram svg line[stroke="#333333"],
+      .database-diagram.ai-diagram svg line[stroke="#333"],
+      .database-diagram.ai-diagram svg line[stroke="rgb(51, 51, 51)"],
+      .database-diagram.ai-diagram svg polyline[stroke="#333333"],
+      .database-diagram.ai-diagram svg polyline[stroke="#333"],
+      .database-diagram.ai-diagram svg polyline[stroke="rgb(51, 51, 51)"] {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      /* Override untuk AI diagram - semua path dan line yang mungkin ada */
+      .database-diagram.ai-diagram svg path:not([fill]),
+      .database-diagram.ai-diagram svg line:not([fill]),
+      .database-diagram.ai-diagram svg polyline:not([fill]) {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+        stroke-opacity: 1 !important;
+      }
+      /* Force dark colors for AI diagrams only */
+      .database-diagram.ai-diagram svg {
+        background: white !important;
+      }
+      /* Override hanya elemen yang diperlukan untuk AI diagram */
+      .database-diagram.ai-diagram svg path,
+      .database-diagram.ai-diagram svg line,
+      .database-diagram.ai-diagram svg polyline {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+      }
+      .database-diagram.ai-diagram svg text,
+      .database-diagram.ai-diagram svg tspan {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+      }
+      /* Override sederhana untuk elemen penting AI diagram */
+      .database-diagram.ai-diagram svg .edgePath path {
+        stroke: #1e293b !important;
+        stroke-width: 2px !important;
+      }
+      .database-diagram.ai-diagram svg .edgeLabel {
+        fill: #1e293b !important;
+      }
+      /* Force all text elements to be dark and high contrast */
+      .database-diagram.ai-diagram svg text,
+      .database-diagram.ai-diagram svg tspan,
+      .database-diagram.ai-diagram svg .label,
+      .database-diagram.ai-diagram svg .nodeLabel,
+      .database-diagram.ai-diagram svg .edgeLabel,
+      .database-diagram.ai-diagram svg .titleText,
+      .database-diagram.ai-diagram svg .actor,
+      .database-diagram.ai-diagram svg .messageText,
+      .database-diagram.ai-diagram svg .labelText {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Force text in gray backgrounds to be dark */
+      .database-diagram.ai-diagram svg g[fill*="#f1f5f9"] text,
+      .database-diagram.ai-diagram svg g[fill*="#f8fafc"] text,
+      .database-diagram.ai-diagram svg g[fill*="#e2e8f0"] text,
+      .database-diagram.ai-diagram svg g[fill*="#cbd5e1"] text,
+      .database-diagram.ai-diagram svg rect[fill*="#f1f5f9"] + text,
+      .database-diagram.ai-diagram svg rect[fill*="#f8fafc"] + text,
+      .database-diagram.ai-diagram svg rect[fill*="#e2e8f0"] + text,
+      .database-diagram.ai-diagram svg rect[fill*="#cbd5e1"] + text {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Force all text in entity boxes to be dark */
+      .database-diagram.ai-diagram svg .entityBox text,
+      .database-diagram.ai-diagram svg .entityBox tspan,
+      .database-diagram.ai-diagram svg .entityBox .label,
+      .database-diagram.ai-diagram svg .entityBox .nodeLabel {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Force all text in attribute boxes to be dark */
+      .database-diagram.ai-diagram svg .attributeBox text,
+      .database-diagram.ai-diagram svg .attributeBox tspan,
+      .database-diagram.ai-diagram svg .attributeBox .label,
+      .database-diagram.ai-diagram svg .attributeBox .nodeLabel {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Force text in even/odd rows to be dark */
+      .database-diagram.ai-diagram svg rect[fill*="#ffffff"] text,
+      .database-diagram.ai-diagram svg rect[fill*="#f8fafc"] text,
+      .database-diagram.ai-diagram svg rect[fill*="#f1f5f9"] text,
+      .database-diagram.ai-diagram svg rect[fill*="#e2e8f0"] text,
+      .database-diagram.ai-diagram svg rect[fill*="#cbd5e1"] text {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Force text in all table cells to be dark */
+      .database-diagram.ai-diagram svg g[class*="table"] text,
+      .database-diagram.ai-diagram svg g[class*="row"] text,
+      .database-diagram.ai-diagram svg g[class*="cell"] text,
+      .database-diagram.ai-diagram svg g[class*="column"] text {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Force text in alternating rows */
+      .database-diagram.ai-diagram svg g:nth-child(even) text,
+      .database-diagram.ai-diagram svg g:nth-child(odd) text,
+      .database-diagram.ai-diagram svg rect:nth-child(even) + text,
+      .database-diagram.ai-diagram svg rect:nth-child(odd) + text {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Force all foreign objects and text containers */
+      .database-diagram.ai-diagram svg foreignObject,
+      .database-diagram.ai-diagram svg foreignObject *,
+      .database-diagram.ai-diagram svg .label *,
+      .database-diagram.ai-diagram svg .nodeLabel * {
+        color: #1e293b !important;
+        fill: #1e293b !important;
+      }
+      /* Override any remaining light colored text */
+      .database-diagram.ai-diagram svg *[fill*="blue"],
+      .database-diagram.ai-diagram svg *[fill*="#"],
+      .database-diagram.ai-diagram svg *[fill*="rgb"],
+      .database-diagram.ai-diagram svg *[fill*="hsl"] {
+        fill: #1e293b !important;
+      }
+      /* Force all text to be bold and dark */
+      .database-diagram.ai-diagram svg text {
+        font-weight: bold !important;
+        fill: #1e293b !important;
+        stroke: none !important;
+      }
+      /* Universal text override - force all text to be dark */
+      .database-diagram.ai-diagram svg * text,
+      .database-diagram.ai-diagram svg * tspan,
+      .database-diagram.ai-diagram svg * .label,
+      .database-diagram.ai-diagram svg * .nodeLabel {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Nuclear option - override ALL text elements with maximum specificity */
+      .database-diagram.ai-diagram svg text,
+      .database-diagram.ai-diagram svg tspan,
+      .database-diagram.ai-diagram svg text[fill],
+      .database-diagram.ai-diagram svg tspan[fill],
+      .database-diagram.ai-diagram svg text[style*="fill"],
+      .database-diagram.ai-diagram svg tspan[style*="fill"] {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Override with maximum specificity for white text */
+      .database-diagram.ai-diagram svg text[fill="white"],
+      .database-diagram.ai-diagram svg text[fill="#fff"],
+      .database-diagram.ai-diagram svg text[fill="#ffffff"],
+      .database-diagram.ai-diagram svg text[fill="rgb(255,255,255)"],
+      .database-diagram.ai-diagram svg tspan[fill="white"],
+      .database-diagram.ai-diagram svg tspan[fill="#fff"],
+      .database-diagram.ai-diagram svg tspan[fill="#ffffff"],
+      .database-diagram.ai-diagram svg tspan[fill="rgb(255,255,255)"] {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Override any remaining white or light colored text */
+      .database-diagram.ai-diagram svg text[fill*="white"],
+      .database-diagram.ai-diagram svg text[fill*="#fff"],
+      .database-diagram.ai-diagram svg text[fill*="#ffffff"],
+      .database-diagram.ai-diagram svg tspan[fill*="white"],
+      .database-diagram.ai-diagram svg tspan[fill*="#fff"],
+      .database-diagram.ai-diagram svg tspan[fill*="#ffffff"] {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Maximum specificity override for all text */
+      .database-diagram.ai-diagram svg g text,
+      .database-diagram.ai-diagram svg g tspan,
+      .database-diagram.ai-diagram svg rect + text,
+      .database-diagram.ai-diagram svg rect + tspan,
+      .database-diagram.ai-diagram svg g rect + text,
+      .database-diagram.ai-diagram svg g rect + tspan {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Override with maximum specificity using attribute selectors */
+      .database-diagram.ai-diagram svg text[fill],
+      .database-diagram.ai-diagram svg tspan[fill],
+      .database-diagram.ai-diagram svg text[style],
+      .database-diagram.ai-diagram svg tspan[style] {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Ultimate override - target ALL text elements with maximum specificity */
+      .database-diagram.ai-diagram svg text,
+      .database-diagram.ai-diagram svg tspan {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Override any text that might be styled inline */
+      .database-diagram.ai-diagram svg text[style*="fill"],
+      .database-diagram.ai-diagram svg tspan[style*="fill"],
+      .database-diagram.ai-diagram svg text[style*="color"],
+      .database-diagram.ai-diagram svg tspan[style*="color"] {
+        fill: #1e293b !important;
+        color: #1e293b !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Force all column backgrounds to be dark */
+      .database-diagram.ai-diagram svg rect[fill*="#f1f5f9"],
+      .database-diagram.ai-diagram svg rect[fill*="#f8fafc"],
+      .database-diagram.ai-diagram svg rect[fill*="#e2e8f0"],
+      .database-diagram.ai-diagram svg rect[fill*="#cbd5e1"],
+      .database-diagram.ai-diagram svg rect[fill*="#ffffff"] {
+        fill: #1e293b !important;
+      }
+      /* Force all text in dark columns to be white */
+      .database-diagram.ai-diagram svg rect[fill="#1e293b"] + text,
+      .database-diagram.ai-diagram svg rect[fill="#1e293b"] text,
+      .database-diagram.ai-diagram svg g[fill="#1e293b"] text,
+      .database-diagram.ai-diagram svg g[fill="#1e293b"] tspan {
+        fill: #ffffff !important;
+        color: #ffffff !important;
+      }
+      /* ULTIMATE NUCLEAR OPTION - Force everything */
+      .database-diagram.ai-diagram svg,
+      .database-diagram.ai-diagram svg *,
+      .database-diagram.ai-diagram svg rect,
+      .database-diagram.ai-diagram svg g,
+      .database-diagram.ai-diagram svg path,
+      .database-diagram.ai-diagram svg line,
+      .database-diagram.ai-diagram svg polyline,
+      .database-diagram.ai-diagram svg polygon {
+        fill: #1e293b !important;
+        stroke: #1e293b !important;
+        background: #1e293b !important;
+      }
+      /* Force all table cells to be the same color - no alternating */
+      .database-diagram.ai-diagram svg rect[fill],
+      .database-diagram.ai-diagram svg g[fill],
+      .database-diagram.ai-diagram svg .entityBox,
+      .database-diagram.ai-diagram svg .attributeBox {
+        fill: #1e293b !important;
+        background: #1e293b !important;
+      }
+      /* Override any alternating color patterns */
+      .database-diagram.ai-diagram svg rect:nth-child(odd),
+      .database-diagram.ai-diagram svg rect:nth-child(even),
+      .database-diagram.ai-diagram svg g:nth-child(odd),
+      .database-diagram.ai-diagram svg g:nth-child(even) {
+        fill: #1e293b !important;
+        background: #1e293b !important;
+      }
+      .database-diagram.ai-diagram svg text,
+      .database-diagram.ai-diagram svg tspan,
+      .database-diagram.ai-diagram svg .label,
+      .database-diagram.ai-diagram svg .nodeLabel,
+      .database-diagram.ai-diagram svg .edgeLabel,
+      .database-diagram.ai-diagram svg .titleText,
+      .database-diagram.ai-diagram svg .actor,
+      .database-diagram.ai-diagram svg .messageText,
+      .database-diagram.ai-diagram svg .labelText {
+        fill: #ffffff !important;
+        color: #ffffff !important;
+        stroke: none !important;
+        font-weight: bold !important;
+      }
+      /* Override any remaining elements */
+      .database-diagram.ai-diagram svg [fill],
+      .database-diagram.ai-diagram svg [style*="fill"] {
+        fill: #1e293b !important;
+      }
+      .database-diagram.ai-diagram svg text[fill],
+      .database-diagram.ai-diagram svg tspan[fill],
+      .database-diagram.ai-diagram svg text[style*="fill"],
+      .database-diagram.ai-diagram svg tspan[style*="fill"] {
+        fill: #ffffff !important;
+        color: #ffffff !important;
+      }
+    `;
+    document.head.appendChild(style);
 
     mermaid.initialize({
       startOnLoad: false,
@@ -95,7 +568,24 @@ export function DatabaseRelationDiagram({
         rankSpacing: 50,
         diagramPadding: 20,
       },
+      er: {
+        diagramPadding: 20,
+        layoutDirection: "TB",
+        minEntityWidth: 100,
+        minEntityHeight: 75,
+        entityPadding: 15,
+        stroke: "#1e293b",
+        fill: "#1e293b",
+        fontSize: 12,
+      },
     });
+
+    return () => {
+      const existingStyle = document.getElementById("mermaid-custom-style");
+      if (existingStyle) {
+        existingStyle.remove();
+      }
+    };
   }, []);
 
   // Generate Mermaid diagram definition
@@ -268,6 +758,11 @@ export function DatabaseRelationDiagram({
       return;
     }
 
+    // Prevent multiple clicks
+    if (isGeneratingAI || isLoading) {
+      return;
+    }
+
     // Clear previous diagram before generating new one
     setDiagramSvg("");
 
@@ -285,16 +780,19 @@ export function DatabaseRelationDiagram({
       // Step 1: Call AI API
       setAiProgress(25);
 
-      const response = await fetch("/api/generate-diagram", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          schema,
-          aiConfig: aiConfig,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/generate-diagram",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            schemaDescription: JSON.stringify(schema),
+            aiConfig: aiConfig,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -305,10 +803,10 @@ export function DatabaseRelationDiagram({
       }
 
       const result = await response.json();
-      const { diagramDefinition } = result;
+      const { diagram } = result;
 
-      if (!diagramDefinition) {
-        throw new Error("No diagram definition returned from AI API");
+      if (!diagram) {
+        throw new Error("No diagram returned from AI API");
       }
 
       // Step 2: Render diagram
@@ -318,19 +816,391 @@ export function DatabaseRelationDiagram({
         .toString(36)
         .substr(2, 9)}`;
 
-      const { svg } = await mermaid.render(diagramId, diagramDefinition);
-      setDiagramSvg(svg);
+      const { svg } = await mermaid.render(diagramId, diagram);
+      // Add ai-diagram class to SVG for CSS targeting
+      const svgWithClass = svg.replace("<svg", '<svg class="ai-diagram"');
+      setDiagramSvg(svgWithClass);
+
+      // Force override all text elements with JavaScript after rendering
+      const forceTextOverride = () => {
+        const svgElement = document.querySelector(
+          ".database-diagram.ai-diagram svg"
+        );
+        if (svgElement) {
+          // NUCLEAR OPTION - Override EVERYTHING
+          const allElements2 = svgElement.querySelectorAll("*");
+          allElements2.forEach((el: any) => {
+            // Force all backgrounds to be dark - NO ALTERNATING COLORS
+            if (el.tagName === "rect" || el.tagName === "g") {
+              el.style.fill = "#1e293b";
+              el.style.background = "#1e293b";
+              el.setAttribute("fill", "#1e293b");
+              // Override any alternating color classes
+              el.classList.remove("odd", "even", "alternating");
+            }
+            // Force all text to be white
+            if (el.tagName === "text" || el.tagName === "tspan") {
+              el.style.fill = "#ffffff";
+              el.style.color = "#ffffff";
+              el.setAttribute("fill", "#ffffff");
+              el.setAttribute("color", "#ffffff");
+            }
+            // Force all lines to be dark
+            if (
+              el.tagName === "path" ||
+              el.tagName === "line" ||
+              el.tagName === "polyline"
+            ) {
+              el.style.stroke = "#1e293b";
+              el.setAttribute("stroke", "#1e293b");
+            }
+          });
+
+          // Specifically target alternating color elements
+          const alternatingElements = svgElement.querySelectorAll(
+            "rect[fill*='#f'], rect[fill*='#e'], rect[fill*='#c'], rect[fill*='#9'], rect[fill*='#6'], rect[fill*='#3'], rect[fill*='#1']"
+          );
+          alternatingElements.forEach((el: any) => {
+            el.style.fill = "#1e293b";
+            el.style.background = "#1e293b";
+            el.setAttribute("fill", "#1e293b");
+          });
+
+          // Override all text elements
+          const allTextElements = svgElement.querySelectorAll(
+            "text, tspan, .label, .nodeLabel, .edgeLabel"
+          );
+          allTextElements.forEach((el: any) => {
+            el.style.fill = "#ffffff";
+            el.style.color = "#ffffff";
+            el.style.stroke = "none";
+            el.style.fontWeight = "bold";
+            el.setAttribute("fill", "#ffffff");
+            el.setAttribute("color", "#ffffff");
+          });
+
+          // Override text in gray backgrounds specifically
+          const grayBackgroundElements = svgElement.querySelectorAll(
+            "g[fill*='#f1f5f9'], g[fill*='#f8fafc'], g[fill*='#e2e8f0'], g[fill*='#cbd5e1'], rect[fill*='#f1f5f9'], rect[fill*='#f8fafc'], rect[fill*='#e2e8f0'], rect[fill*='#cbd5e1'], rect[fill*='#ffffff']"
+          );
+          grayBackgroundElements.forEach((el: any) => {
+            const textElements = el.querySelectorAll(
+              "text, tspan, .label, .nodeLabel"
+            );
+            textElements.forEach((textEl: any) => {
+              textEl.style.fill = "#1e293b";
+              textEl.style.color = "#1e293b";
+              textEl.style.stroke = "none";
+              textEl.style.fontWeight = "bold";
+              textEl.setAttribute("fill", "#1e293b");
+              textEl.setAttribute("color", "#1e293b");
+            });
+          });
+
+          // Override text in all table cells (even/odd rows)
+          const allRects = svgElement.querySelectorAll("rect");
+          allRects.forEach((rect: any) => {
+            const textElements = rect.parentElement?.querySelectorAll(
+              "text, tspan, .label, .nodeLabel"
+            );
+            if (textElements) {
+              textElements.forEach((textEl: any) => {
+                textEl.style.fill = "#1e293b";
+                textEl.style.color = "#1e293b";
+                textEl.style.stroke = "none";
+                textEl.style.fontWeight = "bold";
+                textEl.setAttribute("fill", "#1e293b");
+                textEl.setAttribute("color", "#1e293b");
+              });
+            }
+          });
+
+          // Override text in all groups (for table structure)
+          const allGroups = svgElement.querySelectorAll("g");
+          allGroups.forEach((group: any) => {
+            const textElements = group.querySelectorAll(
+              "text, tspan, .label, .nodeLabel"
+            );
+            textElements.forEach((textEl: any) => {
+              textEl.style.fill = "#1e293b";
+              textEl.style.color = "#1e293b";
+              textEl.style.stroke = "none";
+              textEl.style.fontWeight = "bold";
+              textEl.setAttribute("fill", "#1e293b");
+              textEl.setAttribute("color", "#1e293b");
+            });
+          });
+
+          // Override all foreign objects
+          const foreignObjects = svgElement.querySelectorAll(
+            "foreignObject, foreignObject *"
+          );
+          foreignObjects.forEach((el: any) => {
+            el.style.color = "#1e293b";
+            el.style.fill = "#1e293b";
+          });
+
+          // Override any elements with light colors
+          const allElements = svgElement.querySelectorAll("*");
+          allElements.forEach((el: any) => {
+            if (
+              el.style.fill &&
+              (el.style.fill.includes("blue") ||
+                el.style.fill.includes("#") ||
+                el.style.fill.includes("rgb"))
+            ) {
+              el.style.fill = "#1e293b";
+              el.setAttribute("fill", "#1e293b");
+            }
+            if (
+              el.style.color &&
+              (el.style.color.includes("blue") ||
+                el.style.color.includes("#") ||
+                el.style.color.includes("rgb"))
+            ) {
+              el.style.color = "#1e293b";
+              el.setAttribute("color", "#1e293b");
+            }
+          });
+
+          // Force all text to be dark regardless of parent background
+          const allTextNodes = svgElement.querySelectorAll("text, tspan");
+          allTextNodes.forEach((textEl: any) => {
+            // Force override with maximum priority
+            textEl.style.setProperty("fill", "#1e293b", "important");
+            textEl.style.setProperty("color", "#1e293b", "important");
+            textEl.style.setProperty("stroke", "none", "important");
+            textEl.style.setProperty("font-weight", "bold", "important");
+            textEl.setAttribute("fill", "#1e293b");
+            textEl.setAttribute("color", "#1e293b");
+
+            // Also check if parent has gray background
+            let parent = textEl.parentElement;
+            while (parent && parent !== svgElement) {
+              if (
+                parent.style.fill &&
+                (parent.style.fill.includes("#f1f5f9") ||
+                  parent.style.fill.includes("#f8fafc") ||
+                  parent.style.fill.includes("#e2e8f0") ||
+                  parent.style.fill.includes("#cbd5e1") ||
+                  parent.style.fill.includes("#ffffff"))
+              ) {
+                textEl.style.setProperty("fill", "#1e293b", "important");
+                textEl.style.setProperty("color", "#1e293b", "important");
+                textEl.setAttribute("fill", "#1e293b");
+                textEl.setAttribute("color", "#1e293b");
+                break;
+              }
+              parent = parent.parentElement;
+            }
+          });
+
+          // Nuclear option - force ALL text elements to be dark
+          const allSvgElements = svgElement.querySelectorAll("*");
+          allSvgElements.forEach((el: any) => {
+            if (el.tagName === "text" || el.tagName === "tspan") {
+              el.style.setProperty("fill", "#1e293b", "important");
+              el.style.setProperty("color", "#1e293b", "important");
+              el.style.setProperty("stroke", "none", "important");
+              el.style.setProperty("font-weight", "bold", "important");
+              el.setAttribute("fill", "#1e293b");
+              el.setAttribute("color", "#1e293b");
+            }
+          });
+
+          // Additional aggressive override - target specific Mermaid classes
+          const mermaidTextElements = svgElement.querySelectorAll(
+            "text, tspan, .nodeLabel, .edgeLabel, .label, .titleText, .actor, .messageText, .labelText"
+          );
+          mermaidTextElements.forEach((el: any) => {
+            el.style.setProperty("fill", "#1e293b", "important");
+            el.style.setProperty("color", "#1e293b", "important");
+            el.style.setProperty("stroke", "none", "important");
+            el.style.setProperty("font-weight", "bold", "important");
+            el.setAttribute("fill", "#1e293b");
+            el.setAttribute("color", "#1e293b");
+          });
+
+          // Force all column backgrounds to be dark
+          const allRects2 = svgElement.querySelectorAll("rect");
+          allRects2.forEach((rect: any) => {
+            const fillColor =
+              rect.getAttribute("fill") || rect.style.fill || "";
+            if (
+              fillColor.includes("#f1f5f9") ||
+              fillColor.includes("#f8fafc") ||
+              fillColor.includes("#e2e8f0") ||
+              fillColor.includes("#cbd5e1") ||
+              fillColor.includes("#ffffff") ||
+              fillColor === "white" ||
+              fillColor === "#fff" ||
+              fillColor === "#ffffff"
+            ) {
+              rect.style.setProperty("fill", "#1e293b", "important");
+              rect.setAttribute("fill", "#1e293b");
+            }
+          });
+
+          // Force all text in dark columns to be white
+          const allTexts = svgElement.querySelectorAll("text, tspan");
+          allTexts.forEach((el: any) => {
+            // Check if parent has dark background
+            let parent = el.parentElement;
+            let hasDarkBackground = false;
+
+            while (parent && parent !== svgElement) {
+              const parentFill =
+                parent.getAttribute("fill") || parent.style.fill || "";
+              if (parentFill === "#1e293b" || parentFill.includes("#1e293b")) {
+                hasDarkBackground = true;
+                break;
+              }
+              parent = parent.parentElement;
+            }
+
+            if (hasDarkBackground) {
+              el.style.setProperty("fill", "#ffffff", "important");
+              el.style.setProperty("color", "#ffffff", "important");
+              el.setAttribute("fill", "#ffffff");
+              el.setAttribute("color", "#ffffff");
+            } else {
+              // For light backgrounds, use dark text
+              el.style.setProperty("fill", "#1e293b", "important");
+              el.style.setProperty("color", "#1e293b", "important");
+              el.setAttribute("fill", "#1e293b");
+              el.setAttribute("color", "#1e293b");
+            }
+          });
+
+          // ER Diagram specific overrides
+          const erElements = svgElement.querySelectorAll(
+            ".er .entityBox, .er .attributeBox"
+          );
+          erElements.forEach((el: any) => {
+            el.style.setProperty("fill", "#1e293b", "important");
+            el.style.setProperty("stroke", "#1e293b", "important");
+            el.setAttribute("fill", "#1e293b");
+            el.setAttribute("stroke", "#1e293b");
+          });
+
+          const erTexts = svgElement.querySelectorAll(
+            ".er .entityLabel, .er .attributeLabel"
+          );
+          erTexts.forEach((el: any) => {
+            el.style.setProperty("fill", "#ffffff", "important");
+            el.style.setProperty("color", "#ffffff", "important");
+            el.setAttribute("fill", "#ffffff");
+            el.setAttribute("color", "#ffffff");
+          });
+
+          const erLines = svgElement.querySelectorAll(
+            ".er .relationshipLine, .er path, .er line"
+          );
+          erLines.forEach((el: any) => {
+            el.style.setProperty("stroke", "#1e293b", "important");
+            el.style.setProperty("stroke-width", "2px", "important");
+            el.setAttribute("stroke", "#1e293b");
+            el.setAttribute("stroke-width", "2");
+          });
+        }
+      };
+
+      // Run multiple times with delays and requestAnimationFrame
+      setTimeout(forceTextOverride, 100);
+      setTimeout(forceTextOverride, 300);
+      setTimeout(forceTextOverride, 500);
+      setTimeout(forceTextOverride, 1000);
+      setTimeout(forceTextOverride, 2000);
+      setTimeout(forceTextOverride, 3000);
+
+      // Use requestAnimationFrame for better timing
+      requestAnimationFrame(() => {
+        forceTextOverride();
+        requestAnimationFrame(() => {
+          forceTextOverride();
+        });
+      });
+
+      // ULTIMATE NUCLEAR OPTION - Run continuously for 15 seconds
+      const nuclearInterval = setInterval(() => {
+        forceTextOverride();
+      }, 50);
+
+      // Stop after 15 seconds
+      setTimeout(() => {
+        clearInterval(nuclearInterval);
+      }, 15000);
+
+      // Additional aggressive override
+      const aggressiveOverride = () => {
+        const svgElement = document.querySelector(
+          ".database-diagram.ai-diagram svg"
+        );
+        if (svgElement) {
+          console.log("Aggressive override running on SVG element");
+          // Force ALL elements to be dark
+          const allElements = svgElement.querySelectorAll("*");
+          console.log(`Found ${allElements.length} elements to override`);
+          allElements.forEach((el: any) => {
+            if (el.tagName !== "text" && el.tagName !== "tspan") {
+              el.style.fill = "#1e293b";
+              el.style.background = "#1e293b";
+              el.setAttribute("fill", "#1e293b");
+            } else {
+              el.style.fill = "#ffffff";
+              el.style.color = "#ffffff";
+              el.setAttribute("fill", "#ffffff");
+            }
+          });
+        } else {
+          console.log("No SVG element found for aggressive override");
+        }
+      };
+
+      // Run aggressive override
+      setTimeout(aggressiveOverride, 200);
+      setTimeout(aggressiveOverride, 500);
+      setTimeout(aggressiveOverride, 1000);
+      setTimeout(aggressiveOverride, 2000);
+      setTimeout(aggressiveOverride, 5000);
+
+      // Use MutationObserver to monitor DOM changes
+      const observer = new MutationObserver(() => {
+        forceTextOverride();
+      });
+
+      // Start observing
+      const targetNode = document.querySelector(".database-diagram");
+      if (targetNode) {
+        observer.observe(targetNode, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ["style", "fill", "color"],
+        });
+      }
+
+      // Cleanup observer after 5 seconds
+      setTimeout(() => {
+        observer.disconnect();
+      }, 5000);
 
       // Step 3: Complete
       setAiProgress(100);
       setAiGenerationStep("Complete!");
+
+      // Auto-close after successful generation
+      setTimeout(() => {
+        setIsGeneratingAI(false);
+        setAiGenerationStep("");
+        setAiProgress(0);
+      }, 2000);
     } catch (error) {
       console.error("Error generating AI diagram:", error);
       setAiProgress(0);
       setAiGenerationStep("Falling back to basic diagram...");
       // Fallback to regular diagram
       await renderDiagram();
-    } finally {
       setIsGeneratingAI(false);
       setAiGenerationStep("");
       setAiProgress(0);
@@ -365,6 +1235,7 @@ export function DatabaseRelationDiagram({
       }
 
       // Set the SVG using state instead of direct DOM manipulation
+      // Manual diagram - no special class needed, uses default styling
       setDiagramSvg(svg);
     } catch (error) {
       console.error("Error rendering diagram:", error);
@@ -387,13 +1258,21 @@ export function DatabaseRelationDiagram({
                 variant="ghost"
                 size="sm"
                 onClick={handleGenerateAIDiagram}
-                className="h-6 w-6 p-0"
+                className={`h-6 w-6 p-0 ${
+                  isGeneratingAI ? "opacity-50 cursor-not-allowed" : ""
+                }`}
                 disabled={isGeneratingAI || isLoading}
-                title="Generate AI Enhanced Diagram"
+                title={
+                  isGeneratingAI
+                    ? "Generating AI diagram..."
+                    : "Generate AI Enhanced Diagram"
+                }
               >
-                <Sparkles
-                  className={`h-3 w-3 ${isGeneratingAI ? "animate-pulse" : ""}`}
-                />
+                {isGeneratingAI ? (
+                  <RefreshCw className="h-3 w-3 animate-spin" />
+                ) : (
+                  <Sparkles className="h-3 w-3" />
+                )}
               </Button>
               <Button
                 variant="ghost"
@@ -448,13 +1327,21 @@ export function DatabaseRelationDiagram({
                 variant="ghost"
                 size="sm"
                 onClick={handleGenerateAIDiagram}
-                className="h-6 w-6 p-0"
+                className={`h-6 w-6 p-0 ${
+                  isGeneratingAI ? "opacity-50 cursor-not-allowed" : ""
+                }`}
                 disabled={isGeneratingAI || isLoading}
-                title="Generate AI Enhanced Diagram"
+                title={
+                  isGeneratingAI
+                    ? "Generating AI diagram..."
+                    : "Generate AI Enhanced Diagram"
+                }
               >
-                <Sparkles
-                  className={`h-3 w-3 ${isGeneratingAI ? "animate-pulse" : ""}`}
-                />
+                {isGeneratingAI ? (
+                  <RefreshCw className="h-3 w-3 animate-spin" />
+                ) : (
+                  <Sparkles className="h-3 w-3" />
+                )}
               </Button>
               <Button
                 variant="ghost"
@@ -534,13 +1421,20 @@ export function DatabaseRelationDiagram({
                   size="sm"
                   onClick={handleGenerateAIDiagram}
                   disabled={isGeneratingAI || isLoading}
-                  title="Generate AI Enhanced Diagram"
+                  title={
+                    isGeneratingAI
+                      ? "Generating AI diagram..."
+                      : "Generate AI Enhanced Diagram"
+                  }
+                  className={
+                    isGeneratingAI ? "opacity-50 cursor-not-allowed" : ""
+                  }
                 >
-                  <Sparkles
-                    className={`h-4 w-4 ${
-                      isGeneratingAI ? "animate-pulse" : ""
-                    }`}
-                  />
+                  {isGeneratingAI ? (
+                    <RefreshCw className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Sparkles className="h-4 w-4" />
+                  )}
                 </Button>
                 <Button
                   variant="ghost"

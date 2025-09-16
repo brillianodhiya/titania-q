@@ -38,16 +38,19 @@ export function DatabaseInsights({ schema, aiConfig }: DatabaseInsightsProps) {
     setError(null);
 
     try {
-      const response = await fetch("/api/generate-insights", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          schema,
-          aiConfig,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/generate-insights",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            schema,
+            aiConfig,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Failed to generate insights: ${response.statusText}`);
