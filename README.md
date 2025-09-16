@@ -255,7 +255,7 @@ Your support helps us:
 
 **Donation Links:**
 
-- 🇮🇩 [Saweria](https://saweria.co/KanrishaB) - Support via Saweria
+- 🇮🇩 [Saweria](https://saweria.co/Kanrishaurus) - Support via Saweria
 - 🇮🇩 [Trakteer](https://trakteer.id/kanrisha-d) - Support via Trakteer
 
 ### ⭐ Star the Repository

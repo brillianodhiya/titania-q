@@ -255,7 +255,7 @@ Dukungan Anda membantu kami:
 
 **Link Donasi:**
 
-- 🇮🇩 [Saweria](https://saweria.co/KanrishaB) - Dukungan via Saweria
+- 🇮🇩 [Saweria](https://saweria.co/Kanrishaurus) - Dukungan via Saweria
 - 🇮🇩 [Trakteer](https://trakteer.id/kanrisha-d) - Dukungan via Trakteer
 
 ### ⭐ Bintang Repository
