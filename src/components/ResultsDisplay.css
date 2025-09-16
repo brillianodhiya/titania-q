@@ -1,0 +1,493 @@
+/* Virtual Scroll Styles for ResultsDisplay */
+.virtual-spacer {
+  /* Spacer rows for virtual scrolling */
+  pointer-events: none;
+}
+
+.virtual-row {
+  /* Virtual scroll rows */
+  contain: layout style;
+}
+
+/* Performance optimizations */
+.virtual-scroll-container {
+  /* Container for virtual scrolling */
+  contain: layout style paint;
+  will-change: scroll-position;
+}
+
+/* Smooth scrolling for virtual scroll - consistent styling for both vertical and horizontal */
+.virtual-scroll-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.virtual-scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.virtual-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.virtual-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure horizontal scrollbar has same styling as vertical */
+.virtual-scroll-container::-webkit-scrollbar:horizontal {
+  height: 8px;
+}
+
+.virtual-scroll-container::-webkit-scrollbar:vertical {
+  width: 8px;
+}
+
+/* Consistent scrollbar corner styling */
+.virtual-scroll-container::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox scrollbar styling for consistency */
+.virtual-scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Additional styling for better cross-browser consistency */
+.virtual-scroll-container {
+  /* Ensure smooth scrolling on all browsers */
+  -webkit-overflow-scrolling: touch;
+  /* Hide scrollbar on mobile while maintaining functionality */
+  scrollbar-width: thin;
+}
+
+/* Hide scrollbar on mobile devices while maintaining functionality */
+@media (max-width: 768px) {
+  .virtual-scroll-container::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+/* Sidebar scrollbar styling - consistent with table scrollbar */
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Mobile sidebar scrollbar */
+@media (max-width: 768px) {
+  .sidebar-scroll::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+/* Sidebar column details styling */
+.sidebar-column-item {
+  min-height: 2.5rem;
+  padding: 0.5rem;
+  background-color: hsl(var(--muted) / 0.5);
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+}
+
+.sidebar-column-name {
+  font-weight: 500;
+  color: hsl(var(--foreground));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-column-type {
+  color: hsl(var(--muted-foreground));
+  font-size: 0.75rem;
+}
+
+.sidebar-column-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  margin-left: 0.5rem;
+}
+
+.sidebar-badge {
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.sidebar-badge-pk {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.sidebar-badge-fk {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+}
+
+.sidebar-badge-not-null {
+  background-color: hsl(var(--destructive));
+  color: hsl(var(--destructive-foreground));
+}
+
+/* Table cell styling for better horizontal scroll */
+table th,
+table td {
+  white-space: nowrap;
+  min-width: 120px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+  padding: 12px 16px;
+}
+
+/* Special handling for JSON cells and long text */
+table td .whitespace-pre-wrap {
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 400px;
+}
+
+/* Better row height consistency */
+table tbody tr {
+  height: auto;
+  min-height: 48px;
+}
+
+/* Specific column width adjustments */
+table th:nth-child(1),
+table td:nth-child(1) {
+  min-width: 80px;
+  max-width: 100px;
+} /* id_gaji */
+table th:nth-child(2),
+table td:nth-child(2) {
+  min-width: 100px;
+  max-width: 120px;
+} /* tgl_gaji */
+table th:nth-child(3),
+table td:nth-child(3) {
+  min-width: 100px;
+  max-width: 120px;
+} /* id_karyawan */
+table th:nth-child(4),
+table td:nth-child(4) {
+  min-width: 100px;
+  max-width: 120px;
+} /* potongan */
+table th:nth-child(5),
+table td:nth-child(5) {
+  min-width: 120px;
+  max-width: 140px;
+} /* gapok */
+table th:nth-child(6),
+table td:nth-child(6) {
+  min-width: 100px;
+  max-width: 120px;
+} /* tunjangan */
+table th:nth-child(7),
+table td:nth-child(7) {
+  min-width: 100px;
+  max-width: 120px;
+} /* bonus */
+table th:nth-child(8),
+table td:nth-child(8) {
+  min-width: 140px;
+  max-width: 160px;
+} /* gaji_absen_masuk */
+table th:nth-child(9),
+table td:nth-child(9) {
+  min-width: 100px;
+  max-width: 120px;
+} /* komisi */
+table th:nth-child(10),
+table td:nth-child(10) {
+  min-width: 200px;
+  max-width: 300px;
+  white-space: normal;
+} /* detail_komisi */
+table th:nth-child(11),
+table td:nth-child(11) {
+  min-width: 140px;
+  max-width: 160px;
+} /* absen_izin_count */
+table th:nth-child(12),
+table td:nth-child(12) {
+  min-width: 140px;
+  max-width: 160px;
+} /* total_absen_izin */
+
+/* Better text handling for detail_komisi column */
+table td:nth-child(10) {
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+/* Line clamp utility for text truncation */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Expandable cell styling */
+.expandable-cell {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.expandable-cell:hover {
+  background-color: hsl(var(--muted) / 0.2);
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  margin: -0.25rem;
+}
+
+.expanded-cell {
+  position: relative;
+  z-index: 10;
+  background-color: hsl(var(--background));
+  border: 2px solid hsl(var(--primary));
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 1rem;
+  margin: -0.5rem;
+  max-width: 500px;
+  max-height: 300px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+/* Better table row styling */
+table tbody tr {
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+table tbody tr:hover {
+  background-color: hsl(var(--muted) / 0.3);
+}
+
+/* Improved cell padding and alignment */
+table th,
+table td {
+  padding: 12px 16px;
+  vertical-align: top;
+  text-align: left;
+}
+
+/* Better header styling */
+table thead th {
+  background-color: hsl(var(--muted) / 0.5);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: hsl(var(--foreground));
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+/* Dynamic height classes for virtual scrolling */
+.virtual-spacer-top {
+  height: var(--spacer-top-height);
+}
+
+.virtual-spacer-bottom {
+  height: var(--spacer-bottom-height);
+}
+
+.virtual-row-height {
+  height: var(--item-height);
+}
+
+/* Database diagram styling for better readability */
+.database-diagram {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+.database-diagram svg {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !important;
+}
+
+.database-diagram .node rect {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
+.database-diagram .node .label {
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+
+.database-diagram .edgeLabel {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+}
+
+/* Improve diagram readability in both light and dark modes */
+.database-diagram .node rect {
+  stroke-width: 2px !important;
+  rx: 8px !important;
+  ry: 8px !important;
+}
+
+.database-diagram .node .label {
+  text-align: left !important;
+  padding: 8px !important;
+}
+
+/* Make text more readable */
+.database-diagram text {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !important;
+  font-size: 12px !important;
+}
+
+/* Improve table headers */
+.database-diagram .node .label b {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
+}
+
+/* Dark mode adjustments */
+.dark .database-diagram .node .label b {
+  color: #f8fafc !important;
+}
+
+.dark .database-diagram .node rect {
+  fill: #1e293b !important;
+  stroke: #3b82f6 !important;
+}
+
+.dark .database-diagram .node .label {
+  color: #f8fafc !important;
+}
+
+/* Zoom and Pan functionality */
+.database-diagram-container {
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.database-diagram-container.dragging {
+  cursor: grabbing !important;
+}
+
+.database-diagram-container:not(.dragging) {
+  cursor: grab;
+}
+
+.database-diagram-content {
+  transform-origin: center center;
+  transition: transform 0.1s ease-out;
+}
+
+.database-diagram-content.dragging {
+  transition: none;
+}
+
+/* Zoom controls styling */
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid hsl(var(--border));
+  border-radius: 6px;
+  padding: 4px;
+  background: hsl(var(--background));
+}
+
+.zoom-controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.zoom-controls button:hover:not(:disabled) {
+  background: hsl(var(--muted));
+}
+
+.zoom-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.zoom-level {
+  font-size: 12px;
+  color: hsl(var(--muted-foreground));
+  min-width: 48px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Smooth zoom transitions */
+.database-diagram svg {
+  transition: transform 0.1s ease-out;
+}
+
+/* Prevent text selection during drag */
+.database-diagram-container * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Dynamic transform classes */
+.database-diagram-transform {
+  transform-origin: center center;
+  transition: transform 0.1s ease-out;
+}
+
+.database-diagram-transform.dragging {
+  transition: none;
+}
